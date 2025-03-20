@@ -8,7 +8,7 @@
 7. Ödeme Alma (Yaren Ünal)
 8. Filtreleme (Yaren Ünal)
 9. Sipariş Geçmişi (Yaren Ünal)
-10. Yorum yapma - Değerlendirme (Yaren Ünal)
+10. Bildirim gönderme (Yaren Ünal)
 
 # Gereksinim Dağılımları
 1. [Yaren Ünal'ın Gereksinimleri](Yaren-Ünal-Gereksinimler.md)
