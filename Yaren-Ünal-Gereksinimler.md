@@ -16,5 +16,5 @@
 
 - **Sipariş Geçmişi**: Kullanıcının önceden yaptığı alışverişlerini profilinden rahatça görebileceği gereksinimdir.
 
-- **Yorum Ekleme - Değerlendirme**: Ürünleri alan müşterilerin olumlu veya olumsuz geri dönüşlerinin tutulduğu ve o ürünü alacak diğer müşterilere de fikir sağlayacak bir gereksinimdir.
+- **Bildirim Gönderme**: Yöneticinin ürünün fiyatını düşürünce kullanıcıya bildirim gitmesini sağlayan gereksinimdir. 
 
