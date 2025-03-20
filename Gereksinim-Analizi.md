@@ -1,5 +1,5 @@
 # Gereksinimler
-1. Üye Olma (Yaren Ünal)
+1. Giriş yapma (Yaren Ünal)
 2. Kayıt Olma (Yaren Ünal)
 3. Ürünleri Listeleme (Yaren Ünal)
 4. Favorileme (Yaren Ünal)
