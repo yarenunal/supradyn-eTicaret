@@ -18,7 +18,7 @@ struct anasayfaView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: ProfilView()) { // Hata düzeltildi
+                    NavigationLink(destination: profilView()) { // Hata düzeltildi
                         Image(systemName: "person.circle.fill")
                             .resizable()
                             .frame(width: 24, height: 24)
