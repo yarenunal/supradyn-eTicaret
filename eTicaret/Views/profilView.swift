@@ -10,7 +10,7 @@ import SwiftUI
 struct profilView: View {
     var body: some View {
         VStack{
-            //içerik
+            Text("profildesin")
         }.navigationTitle("Profil")
     }
 }
