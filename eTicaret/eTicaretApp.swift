@@ -11,7 +11,7 @@ import SwiftUI
 struct eTicaretApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GirisView()
         }
     }
 }

@@ -1,15 +1,14 @@
 import SwiftUI
 
-struct anasayfaView: View {
+struct AnasayfaView: View {
     @State private var searchText: String = ""
-    @State private var showAllProductsSheet = false // Tüm Ürünler için Sheet State
+    @State private var showAllProductsSheet = false
     @State private var selectedColor: String = "Tüm Renkler"
     @State private var selectedFabric: String = "Tüm Kumaşlar"
     
     let colors = ["Tüm Renkler", "Kırmızı", "Mavi", "Yeşil", "Siyah", "Beyaz"]
     let fabrics = ["Tüm Kumaşlar", "Deri", "Keten"]
     
-    // Öne Çıkarılan Ürünler Listesi
     let featuredProducts = [
         Product(id: 1, name: "Öne Çıkan Ürün 1", price: 399.99, color: "Kırmızı", fabric: "Deri"),
         Product(id: 2, name: "Öne Çıkan Ürün 2", price: 249.99, color: "Mavi", fabric: "Keten"),
@@ -22,17 +21,19 @@ struct anasayfaView: View {
         var price: Double
         var color: String
         var fabric: String
+        
     }
 
     var body: some View {
         NavigationStack {
+            ScrollView{
             VStack {
-                // "Tüm Ürünler" Butonu
+                
                 Button(action: {
                     showAllProductsSheet = true
                 }) {
                     HStack {
-                        Image(systemName: "cart.fill")  // Sepet simgesi ekleniyor
+                        Image(systemName: "cart.fill")
                             .font(.title2)
                             .foregroundColor(.white)
                         
@@ -45,81 +46,104 @@ struct anasayfaView: View {
                     .frame(maxWidth: .infinity)
                     .background(
                         LinearGradient(gradient: Gradient(colors: [Color.purple, Color.pink]),
-                                       startPoint: .topLeading, endPoint: .bottomTrailing) // Renk geçişi
+                                       startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
-                    .cornerRadius(15)  // Yuvarlak köşeler
-                    .shadow(radius: 10) // Gölgelendirme
+                    .cornerRadius(15)
+                    .shadow(radius: 10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.white.opacity(0.6), lineWidth: 2) // Kenar çizgisi
+                            .stroke(Color.white.opacity(0.6), lineWidth: 2)
                     )
-                    .scaleEffect(showAllProductsSheet ? 1.05 : 1) // Butonun tıklanabilirliğini arttıran etki
-                    .animation(.easeInOut(duration: 0.3), value: showAllProductsSheet) // Buton animasyonu
+                    .scaleEffect(showAllProductsSheet ? 1.05 : 1)
+                    .animation(.easeInOut(duration: 0.3), value: showAllProductsSheet)
                 }
                 .padding(.horizontal)
                 
-                // Öne Çıkan Ürünler Başlığı
+                
                 Text("Öne Çıkan Ürünler")
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.top, 20)
                 
-                // Yatay Kaydırılabilir Öne Çıkan Ürünler
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 15) {
                         ForEach(featuredProducts) { product in
-                            VStack {
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(width: 150, height: 150)
-                                    .overlay(Text("Resim"))
-                                    .cornerRadius(10)
-                                
-                                Text(product.name)
-                                    .font(.headline)
+                            ZStack(alignment: .topTrailing) {
+                                VStack {
+                                    Rectangle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 150, height: 150)
+                                        .overlay(Text("Resim"))
+                                        .cornerRadius(10)
+                                    
+                                    Text(product.name)
+                                        .font(.headline)
+                                        .padding(.top, 5)
+                                    
+                                    Text("₺\(product.price, specifier: "%.2f")")
+                                        .font(.subheadline)
+                                        .foregroundColor(.green)
+                                    
+                                    Button(action: {
+                                        // Sepete ekle işlemi yapılacak
+                                    }) {
+                                        Text("Sepete Ekle")
+                                            .foregroundColor(.white)
+                                            .padding()
+                                            .background(Color.purple)
+                                            .cornerRadius(10)
+                                    }
                                     .padding(.top, 5)
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(15)
+                                .shadow(radius: 5)
                                 
-                                Text("₺\(product.price, specifier: "%.2f")")
-                                    .font(.subheadline)
-                                    .foregroundColor(.green)
+                                // Kalp ikonu
+                                Button(action: {
+                                    // Favori ekleme işlemi yapılacak
+                                }) {
+                                    Image(systemName: "heart")
+                                        .foregroundColor(.red)
+                                        .padding(8)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 2)
+                                }
+                                .padding(8)
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(15)
-                            .shadow(radius: 5)
                         }
                     }
                     .padding(.horizontal)
                 }
 
-                // Resimli Buton, tüm yatay satırı dolduruyor ve ekranın geri kalan kısmını kaplıyor
-                NavigationLink(destination: RedProductsView()) { // NavigationLink eklendi
+                NavigationLink(destination: RedProductsView()) {
                     ZStack {
-                        // Butonun arka planını oluşturuyoruz
                         RoundedRectangle(cornerRadius: 15)
                             .fill(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.pink]),
                                                  startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .frame(height: 200) // Butonun boyunu belirliyoruz (yükseklik)
+                            .frame(height: 200)
 
-                        // Butonun içeriğini yerleştiriyoruz
                         HStack {
-                            Image(systemName: "photo.fill")  // Resim simgesi
+                            Image(systemName: "photo.fill")
                                 .font(.title)
                                 .foregroundColor(.white)
                             Text("Resimli Buton")
                                 .font(.headline)
                                 .foregroundColor(.white)
-                            Spacer()  // Butonun içindeki öğelerin yatayda yayılmasını sağlar
+                            Spacer()
                         }
                         .padding()
-                        .frame(maxWidth: .infinity)  // Ekranın geri kalan kısmını kaplar
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal)
                 }
-                .frame(maxWidth: .infinity)  // Ekranın geri kalan kısmını kaplar.
+                .frame(maxWidth: .infinity)
                 .padding(.top, 20)
                 
                 Spacer()
+                    
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -128,7 +152,7 @@ struct anasayfaView: View {
                             .resizable()
                             .frame(width: 24, height: 24)
                             .foregroundColor(.purple)
-                    }
+                    }}
                 }
             }
         }
@@ -148,7 +172,7 @@ struct TumUrunlerView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    struct Product: Identifiable {
+    struct Product: Identifiable, Hashable {
         var id: Int
         var name: String
         var price: Double
@@ -166,12 +190,13 @@ struct TumUrunlerView: View {
     ]
     
     @State private var showFilters = false
+    @State private var favoriteProducts: Set<Int> = []  // Favori ürün ID'lerini saklar
+    @State private var cartItems: [Product] = [] // Sepet ürünleri
     
     var body: some View {
         NavigationStack {
-            ScrollView {  // ScrollView içine aldık
+            ScrollView {
                 VStack {
-                    // "Filtrele" butonu
                     Button(action: {
                         showFilters.toggle()
                     }) {
@@ -184,7 +209,6 @@ struct TumUrunlerView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Filtreler bölümü
                     if showFilters {
                         VStack {
                             Picker("Renk", selection: $selectedColor) {
@@ -205,28 +229,57 @@ struct TumUrunlerView: View {
                         }
                     }
                     
-                    // Ürünler
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                        ForEach(products.filter { $0.color == "Kırmızı" || selectedColor == "Tüm Renkler" }) { product in
-                            VStack {
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(height: 150)
-                                    .overlay(Text("Resim"))
-                                    .cornerRadius(10)
-                                
-                                Text(product.name)
-                                    .font(.headline)
+                        ForEach(products.filter { (selectedColor == "Tüm Renkler" || $0.color == selectedColor) && (selectedFabric == "Tüm Kumaşlar" || $0.fabric == selectedFabric) }) { product in
+                            ZStack(alignment: .topTrailing) {
+                                VStack {
+                                    Rectangle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(height: 150)
+                                        .overlay(Text("Resim"))
+                                        .cornerRadius(10)
+                                    
+                                    Text(product.name)
+                                        .font(.headline)
+                                        .padding(.top, 5)
+                                    
+                                    Text("₺\(product.price, specifier: "%.2f")")
+                                        .font(.subheadline)
+                                        .foregroundColor(.green)
+                                    
+                                    Button(action: {
+                                        cartItems.append(product)
+                                    }) {
+                                        Text("Sepete Ekle")
+                                            .foregroundColor(.white)
+                                            .padding()
+                                            .background(Color.purple)
+                                            .cornerRadius(10)
+                                    }
                                     .padding(.top, 5)
+                                }
+                                .padding()
+                                .background(Color.white)
+                                .cornerRadius(15)
+                                .shadow(radius: 5)
                                 
-                                Text("₺\(product.price, specifier: "%.2f")")
-                                    .font(.subheadline)
-                                    .foregroundColor(.green)
+                                // Kalp ikonu
+                                Button(action: {
+                                    if favoriteProducts.contains(product.id) {
+                                        favoriteProducts.remove(product.id)
+                                    } else {
+                                        favoriteProducts.insert(product.id)
+                                    }
+                                }) {
+                                    Image(systemName: favoriteProducts.contains(product.id) ? "heart.fill" : "heart")
+                                        .foregroundColor(.red)
+                                        .padding(8)
+                                        .background(Color.white)
+                                        .clipShape(Circle())
+                                        .shadow(radius: 2)
+                                }
+                                .padding(8)
                             }
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(15)
-                            .shadow(radius: 5)
                         }
                     }
                     .padding(.horizontal)
@@ -250,6 +303,27 @@ struct RedProductsView: View {
         Text("Kırmızı Ürünler")
             .font(.largeTitle)
             .bold()
+    }
+}
+// Arama çubuğu bileşeni
+struct SearchBar: View {
+    @Binding var text: String
+
+    var body: some View {
+        TextField("Ara...", text: $text)
+            .padding(7)
+            .padding(.horizontal, 25)
+            .background(Color(.systemGray6))
+            .cornerRadius(10)
+            .overlay(
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                        .padding(.leading, 8)
+                    Spacer()
+                }
+            )
+            .padding(.horizontal)
     }
 }
 
@@ -312,3 +386,4 @@ struct MainTabView: View {
 #Preview {
     MainTabView()
 }
+
