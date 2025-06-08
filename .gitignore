@@ -1,0 +1,4 @@
+/ecommerce-api/node_modules
+/ecommerce-api/.env
+
+.DS_Store
